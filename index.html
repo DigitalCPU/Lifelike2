@@ -36,12 +36,27 @@
             padding: 20px;
             text-align: center;
             border-radius: 5px;
-            width: 300px;
+            width: 500px;
             margin: 20px auto;
         }
         #blank-container {
             height: 200px;
             overflow-y: auto;
+        }
+            #slider-container {
+            display: flex;
+            width: 1500px; /* 3 slides * 500px each */
+            animation: slideAnimation 10s linear infinite;
+        }
+        .slide {
+            width: 500px;
+            height: 200px;
+            background-color: black;
+            margin-right: 10px;
+        }
+        @keyframes slideAnimation {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-500px); }
         }
     </style>
 </head>
@@ -51,7 +66,13 @@
         <button onclick="toggleSidebar()" style="margin-right: 15px;">☰ Open Sidebar</button>
     </header>
 
-    <div id="blank-container"></div>
+    <div id="blank-container">
+        <div id="slider-container">
+            <div class="slide"></div>
+            <div class="slide"></div>
+            <div class="slide"></div>
+        </div>
+    </div>
 
     <div id="auth-container">
         <h2 id="auth-title">Log In</h2>
@@ -110,21 +131,21 @@
         }
 
         function showAboutInfo() {
-            document.getElementById("blank-container").innerHTML = `
+            const blankContainer = document.getElementById("blank-container");
+            blankContainer.innerHTML = `
+                <button onclick="clearAboutInfo()" style="position: sticky; top: 0; left: 100%; transform: translateX(-100%); background: red; color: white; border: none; padding: 5px; cursor: pointer; display: block; width: 100%; text-align: right;">✖</button>
                 <h3>LifeLike is an AGX-powered live-streaming social network where authenticity takes center stage.</h3>
-                <p>Built to encourage real-time engagement, LifeLike provides a unique decentralized ecosystem that rewards users for going live and ensures diverse, unbiased content distribution.</p>
-                <h4>Core Features & Structure</h4>
-                <ul>
-                    <li><strong>Live Streaming as the Core Experience:</strong> No traditional posts, reinforcing a decentralized economy.</li>
-                    <li><strong>Friends, Followers & Messaging:</strong> Mutual connections and private messaging.</li>
-                    <li><strong>Open Chat & Message Board:</strong> Public chatroom and announcement board.</li>
-                    <li><strong>Decentralized Monetization & AGX Economy:</strong> Earn AGX for engagement.</li>
-                    <li><strong>Content Diversity & Anti-Algorithm Bias:</strong> Fair content distribution without favoritism.</li>
-                    <li><strong>Themed Streaming Modes:</strong> Categories like Educational, Sports, News, Gaming, and more.</li>
-                    <li><strong>The Push for Transparency & Real-Time Engagement:</strong> Encouraging real-time interactions over staged content.</li>
-                </ul>
-                <p>Join LifeLike, where every moment is real.</p>`;
+                <p>Built to encourage real-time engagement, LifeLike provides a unique decentralized ecosystem that rewards users for going live and ensures diverse, unbiased content distribution.</p>`;
+        }
+
+        function clearAboutInfo() {
+            document.getElementById("blank-container").innerHTML = "";
         }
     </script>
+
+    <footer style="text-align: center; padding: 10px; background-color: #1f1f1f; color: #ffffff; margin-top: 20px;">
+        <p>&copy; 2025 LifeLike. All rights reserved.</p>
+        <p><a href="https://github.com/digitalcpu/Cyclonex/blob/main/LICENSE" target="_blank" style="color: #4caf50;">View License</a></p>
+    </footer>
 </body>
 </html>
