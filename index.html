@@ -5,7 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LifeLike - Social Media</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+    <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript">        let slider = document.getElementById("slider-container");
+        let isPaused = false;
+        let scrollAmount = 500;
+        let animationSpeed = 10;
+        let animation;
+        
+        function scrollLeft() {
+            if (!isPaused) {
+                slider.style.animation = "none";
+                slider.style.transform = `translateX(${scrollAmount}px)`;
+            }
+        }
+
+        function scrollRight() {
+            if (!isPaused) {
+                slider.style.animation = "none";
+                slider.style.transform = `translateX(-${scrollAmount}px)`;
+            }
+        }
+
+        function pauseSlider() {
+            isPaused = true;
+            slider.style.animationPlayState = "paused";
+        }
+
+        function playSlider() {
+            isPaused = false;
+            slider.style.animation = `slideAnimation ${animationSpeed}s linear infinite`;
+        }
+    </script>
     <style>
         body {
             background-color: #121212;
@@ -40,8 +69,8 @@
             margin: 20px auto;
         }
         #blank-container {
-            height: 300px;
-            overflow-y: auto;
+            height: 290px;
+            overflow: hidden;
         }
             #slider-container {
             display: flex;
@@ -50,13 +79,41 @@
         }
         .slide {
             width: 500px;
-            height: 200px;
+            height: 290px;
             background-color: black;
             margin-right: 10px;
         }
         @keyframes slideAnimation {
             0% { transform: translateX(0); }
             100% { transform: translateX(-500px); }
+        }
+            #slider-controls {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+            background-color: rgba(31, 31, 31, 0.8);
+            padding: 5px;
+            border-radius: 5px;
+        }
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+        #slider-controls button {
+            background-color: #444;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        #slider-controls button:hover {
+            background-color: #666;
         }
     </style>
 </head>
@@ -66,7 +123,13 @@
         <button onclick="toggleSidebar()" style="margin-right: 15px;">☰ Open Sidebar</button>
     </header>
 
-    <div id="blank-container">
+    <div id="blank-container" style="position: relative;">
+        <div id="slider-controls">
+            <button onclick="scrollLeft()">⬅</button>
+            <button onclick="pauseSlider()">⏸</button>
+            <button onclick="playSlider()">▶</button>
+            <button onclick="scrollRight()">➡</button>
+        </div>
         <div id="slider-container">
             <div class="slide"></div>
             <div class="slide"></div>
@@ -139,7 +202,13 @@
         }
 
         function clearAboutInfo() {
-            document.getElementById("blank-container").innerHTML = "";
+            const blankContainer = document.getElementById("blank-container");
+            blankContainer.innerHTML = `
+                <div id="slider-container">
+                    <div class="slide"></div>
+                    <div class="slide"></div>
+                    <div class="slide"></div>
+                </div>`;
         }
     </script>
 
